@@ -19,8 +19,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         loginView = fxmlLoader.getController();
         loginView.setMainStage(primaryStage);
-        Controller con = new Controller(loginView);
-        AView.setController(con);
+     //   Controller con = new Controller(loginView);
+     //   AView.setController(con);
         //  scene.getStylesheets().add(getClass().getClassLoader().getResource("ViewStyle.css").toExternalForm());
         primaryStage.show();
        // loginView.btn_Login.requestFocus();

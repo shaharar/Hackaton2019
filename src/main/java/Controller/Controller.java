@@ -7,10 +7,10 @@ public class Controller {
     Model model;
     View.AView view;
 
-    public Controller(LoginView loginView) {
-        this.model = new Model(this);
-        this.view = loginView;
-    }
+//    public Controller(LoginView loginView) {
+//        this.model = new Model(this);
+//        this.view = loginView;
+//    }
 
 
     public boolean login(String username, String password) {
