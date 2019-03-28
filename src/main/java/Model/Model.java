@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Model {
     //constructor
@@ -19,27 +20,27 @@ public class Model {
         return conn;
     }
 
-    public String getFieldValue(int index){
-        return "";
+    public ArrayList<String> getRecordsFieldsValues(String sqlQuery, int numOfColumns){
+        ArrayList<String> recordsFieldsValues = new ArrayList<>();
+        try (Connection conn = this.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sqlQuery)) {
+            for (int i = 1; i < numOfColumns; i++){
+                recordsFieldsValues.add(rs.getString(i));
+            }
+            return recordsFieldsValues;
+
+        } catch (SQLException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 
         public boolean inventoryCheck(String productName) {
-        String[] fields = new String[4];
-        String sql = "SELECT * FROM Products WHERE NAME =\"" + productName + "\"";
-        try (Connection conn = this.connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
-            int i = 0;
-            // loop
-            if (rs.next()) {
-                for (int j = 0; j < 4; j++) {
-                    fields[j] = rs.getString(j + 1);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getStackTrace());
-            return false;
-
+        String sqlQuery = "SELECT * FROM Products WHERE NAME =\"" + productName + "\"";
+        ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
+        if (Integer.parseInt(recordValues.get(2)) > 0 ){
+            return true;
         }
         return false;
     }
