@@ -300,7 +300,7 @@ public class Model {
         insertOrder(String.valueOf(counterOfOrders),myProducs,user_name,des_time,order_time,status,String.valueOf(sum));
     }
     public  static void main(String [] args) throws SQLException {
-        Model m= new Model();
+//        Model m= new Model();
 //        m.insertProduct("yarden", "rm", "70","35");
 //        m.insertOrder("yarden", "rm", "70","35","100","clwvkn","flwkjf");
 //        m.insertUser("yarden", "rm","clskvjdv","sdvslkjs", "70","35","100","clwvkn","flwkjf");
