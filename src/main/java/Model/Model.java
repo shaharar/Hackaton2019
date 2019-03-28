@@ -1,5 +1,6 @@
 package Model;
 
+import java.lang.reflect.Array;
 import java.sql.*;
 import java.util.ArrayList;
 import Controller.Controller;
@@ -12,30 +13,38 @@ import java.sql.SQLException;
 public class Model {
 
     Controller controller;
+    ArrayList<String> currentUser;
 
     //constructor
-//    public Model(Controller controller) {
-//        this.controller = controller;
-//    }
+    public Model(Controller controller) {
+        this.controller = controller;
+    }
 
-/*        public boolean login(String username, String password) {
-        if(isUserExist(username)){ //if found in db
-            String realPass = getPassword(username);
+        public boolean login(String username, String password) {
+            String sql = "SELECT * FROM Users WHERE user_name =\"" + username + "\"";
+            ArrayList<String> userInfo = getRecordsFieldsValues(sql, 9);
+            if(isUserExist(userInfo)){ //if user was found in db
+            String realPass = getPassword(userInfo);
             if( realPass.equals(password)){
-                currentUser = getRecordsFieldsValues(username);
                 return true;
             }
         }
         return false;
-    }*/
+    }
 
-    /*    private String getPassword(String username) {
+        private String getPassword(ArrayList<String> userInfo) {
+            return userInfo.get(1);
         }
 
 
-        private boolean isUserExist(String username) {
-
-        }*/
+        private boolean isUserExist(ArrayList<String> userInfo) {
+            if(userInfo != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
     private Connection connect() {
         // SQLite connection string
@@ -128,12 +137,5 @@ public class Model {
         } catch (SQLException e) {
             System.out.println("not bgoood");
         }
-    }
-
-
-    public  static void main(String [] args){
-        Model m= new Model();
-        m.insertProduct("roni", "rm", 34,"35");
-
     }
 }
