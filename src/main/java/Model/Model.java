@@ -63,8 +63,13 @@ public class Model {
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sqlQuery)) {
-            for (int i = 1; i < numOfColumns; i++) {
-                recordsFieldsValues.add(rs.getString(i));
+            if (rs.next()){
+                for (int i = 1; i < numOfColumns + 1; i++) {
+                    recordsFieldsValues.add(rs.getString(i));
+                }
+            }
+            else{
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,7 +78,7 @@ public class Model {
     }
 
     public boolean inventoryCheck(String productName) {
-        String sqlQuery = "SELECT * FROM Products WHERE NAME =\"" + productName + "\"";
+        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + productName + "\"";
         ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
         if (Integer.parseInt(recordValues.get(2)) > 0 ){
             return true;
@@ -137,5 +142,25 @@ public class Model {
         } catch (SQLException e) {
             System.out.println("not bgoood");
         }
+    }
+
+
+    public  static void main(String [] args){
+        Model m= new Model();
+////        m.insertProduct("roni", "rm", 34,"35");
+//        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + "yarden" + "\"";
+//        ArrayList<String> record = m.getRecordsFieldsValues(sqlQuery,4);
+//        if (record == null){
+//            System.out.println("record doesn't exist");
+//        }
+//        else{
+//            for (int i = 0; i < record.size(); i++){
+//                System.out.println(record.get(i));
+//            }
+//        }
+
+
+
+
     }
 }
