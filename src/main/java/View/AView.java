@@ -11,15 +11,15 @@ import java.io.IOException;
 
 public class AView {
 
-    Controller controller;
+    static Controller controller;
     Stage MainStage;
 
     public void setMainStage(Stage stage) {
         this.MainStage = stage;
     }
 
-    public void setController(Controller controller){
-        this.controller=controller;
+    public static void setController(Controller controller){
+        AView.controller = controller;
     };
     public void ChangeScene(String fxml) {
         FXMLLoader fxmlLoader = new FXMLLoader();

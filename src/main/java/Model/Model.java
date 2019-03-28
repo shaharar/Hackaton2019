@@ -43,9 +43,7 @@ public class Model {
             if(userInfo != null){
                 return true;
             }
-            else{
                 return false;
-            }
         }
 
     private boolean isProductExist(ArrayList<String> productInfo) {
@@ -88,7 +86,6 @@ public class Model {
                     recordsFieldsValues.add(rs.getString(i));
                 }
             }
-
             else{
                 return null;
             }
@@ -101,7 +98,7 @@ public class Model {
     public boolean inventoryCheck(String productName) {
         String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + productName + "\"";
         ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
-        if (Integer.parseInt(recordValues.get(2)) > 0 ){
+        if (Integer.parseInt(recordValues.get(1)) > 0 ){
             return true;
         }
         return false;
