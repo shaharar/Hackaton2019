@@ -9,17 +9,17 @@ import Controller.Controller;
 
 public class Main extends Application {
 
-    private LoginView loginView;
+    private MainWebsiteView website;
     @Override
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader fxmlLoader = new FXMLLoader();
-        Parent root = fxmlLoader.load(getClass().getClassLoader().getResource("Login.fxml").openStream());
+        Parent root = fxmlLoader.load(getClass().getClassLoader().getResource("website.fxml").openStream());
         primaryStage.setTitle("Welcome to CoffeePickUp");
-        Scene scene = new Scene(root, 1024, 600);
+        Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene);
-        loginView = fxmlLoader.getController();
-        loginView.setMainStage(primaryStage);
-        Controller con = new Controller(loginView);
+        website = fxmlLoader.getController();
+        website.setMainStage(primaryStage);
+        Controller con = new Controller(website);
         AView.setController(con);
         //  scene.getStylesheets().add(getClass().getClassLoader().getResource("ViewStyle.css").toExternalForm());
         primaryStage.show();

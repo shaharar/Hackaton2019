@@ -1,14 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Website"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="400.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainWebsiteView">
+    <children>
+        <ImageView fitHeight="500.0" fitWidth="700.0" layoutX="-1.0">
+            <image>
+                <Image url="@ing_19024_03249.jpg" />
+            </image>
+            <effect>
+                <ColorAdjust brightness="0.51" contrast="0.17" hue="-1.0" saturation="-0.68" />
+            </effect>
+        </ImageView>
+        <Label layoutX="137.0" layoutY="106.0" prefHeight="106.0" prefWidth="424.0" text="Coffee Pickup" textFill="#143e58">
+            <font>
+                <Font name="Bodoni MT Bold" size="74.0" />
+            </font>
+        </Label>
+        <ComboBox fx:id="coffee" layoutX="19.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" promptText="Coffee" style="-fx-background-color: MOCCASIN;" />
+        <ComboBox fx:id="saladMenu" layoutX="281.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" promptText="Salad" style="-fx-background-color: MOCCASIN;" />
+        <ComboBox fx:id="sandwichesMenu" layoutX="519.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" promptText="Sandwiches" style="-fx-background-color: MOCCASIN;" />
+        <ComboBox fx:id="pastriesMenu" layoutX="519.0" layoutY="321.0" prefHeight="25.0" prefWidth="107.0" promptText="Pastries" style="-fx-background-color: MOCCASIN;" />
+        <ComboBox fx:id="snacksMenu" layoutX="280.0" layoutY="321.0" prefHeight="25.0" prefWidth="107.0" promptText="Snacks" style="-fx-background-color: MOCCASIN;" />
+        <ComboBox fx:id="coldMenu" layoutX="19.0" layoutY="321.0" prefHeight="25.0" prefWidth="107.0" promptText="Cold Drink" style="-fx-background-color: MOCCASIN;" />
+        <Button fx:id="login" layoutX="518.0" layoutY="81.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: MOCCASIN;" text="Login">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+        <ImageView fitHeight="67.0" fitWidth="96.0" layoutX="7.0" layoutY="14.0">
+            <image>
+                <Image url="@W_960_sell-online.png" />
+            </image>
+        </ImageView>
+        <Button fx:id="signup" layoutX="602.0" layoutY="81.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: MOCCASIN;" text="Sign Up">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </Button>
+        <Label layoutX="40.0" layoutY="21.0" prefHeight="10.0" prefWidth="51.0" text="My Cart">
+            <font>
+                <Font name="System Bold" size="12.0" />
+            </font>
+        </Label>
+        <CheckBox fx:id="finish" layoutX="415.0" layoutY="367.0" mnemonicParsing="false" text="Finish order" textFill="#143e58">
+            <font>
+                <Font name="System Bold" size="14.0" />
+            </font>
+        </CheckBox>
+      <TextField fx:id="txt_username_login" layoutX="518.0" layoutY="17.0" promptText="username" />
+      <PasswordField fx:id="psw_password_login" layoutX="518.0" layoutY="48.0" promptText="password" />
+    </children>
 </AnchorPane>

@@ -362,27 +362,23 @@ public class Model {
 
         insertOrder(String.valueOf(counterOfOrders),myProducs,user_name,des_time,order_time,status,String.valueOf(sum));
     }
-    public  static void main(String [] args) throws SQLException {
-//        Model m= new Model();
-//        m.insertProduct("yarden", "rm", "70","35");
-//        m.insertOrder("yarden", "rm", "70","35","100","clwvkn","flwkjf");
-//        m.insertUser("yarden", "rm","clskvjdv","sdvslkjs", "70","35","100","clwvkn","flwkjf");
-//        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + "yarden" + "\"";
-//        ArrayList<String> record = m.getRecordsFieldsValues(sqlQuery,4);
-//        if (record == null){
-//            System.out.println("record doesn't exist");
-//        }
-//        else{
-//            for (int i = 0; i < record.size(); i++){
-//                System.out.println(record.get(i));
-//            }
-//        }
-//        m.deleteProduct("einat");
-//        m.deleteUser("einat");
-//        m.deleteOrder("einat");
-
-
-
-
-    }
+/*    public  static void main(String [] args) throws SQLException {
+        Model m= new Model();
+        m.insertProduct("yarden", "rm", "70","35");
+        m.insertOrder("yarden", "rm", "70","35","100","clwvkn","flwkjf");
+        m.insertUser("yarden", "rm","clskvjdv","sdvslkjs", "70","35","100","clwvkn","flwkjf");
+        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + "yarden" + "\"";
+        ArrayList<String> record = m.getRecordsFieldsValues(sqlQuery,4);
+        if (record == null){
+            System.out.println("record doesn't exist");
+        }
+        else{
+            for (int i = 0; i < record.size(); i++){
+                System.out.println(record.get(i));
+            }
+        }
+        m.deleteProduct("einat");
+        m.deleteUser("einat");
+        m.deleteOrder("einat");
+    }*/
 }
