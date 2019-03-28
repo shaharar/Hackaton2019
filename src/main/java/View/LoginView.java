@@ -25,7 +25,5 @@ public class LoginView extends AView {
         }
     }
 
-    public void signUp() {
 
-    }
 }
