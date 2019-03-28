@@ -18,6 +18,25 @@ public class Model {
 //        this.controller = controller;
 //    }
 
+/*        public boolean login(String username, String password) {
+        if(isUserExist(username)){ //if found in db
+            String realPass = getPassword(username);
+            if( realPass.equals(password)){
+                currentUser = getRecordsFieldsValues(username);
+                return true;
+            }
+        }
+        return false;
+    }*/
+
+    /*    private String getPassword(String username) {
+        }
+
+
+        private boolean isUserExist(String username) {
+
+        }*/
+
     private Connection connect() {
         // SQLite connection string
         String url = "jdbc:sqlite:DB/DataBase.db";
