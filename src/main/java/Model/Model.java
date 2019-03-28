@@ -48,6 +48,24 @@ public class Model {
             }
         }
 
+    private boolean isProductExist(ArrayList<String> productInfo) {
+        if(productInfo != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    private boolean isOrderExist(ArrayList<String> orderInfo) {
+        if(orderInfo != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     private Connection connect() {
         // SQLite connection string
         String url = "jdbc:sqlite:DB/DataBase.db";
@@ -89,7 +107,12 @@ public class Model {
         return false;
     }
 
-    private void insertUser (String uName, String password, String first_name,String last_name, String email,String phone,String cardNumber, String dateCard,String cvv) throws SQLException {
+    private boolean insertUser (String uName, String password, String first_name,String last_name, String email,String phone,String cardNumber, String dateCard,String cvv) throws SQLException {
+        String sqlCheck = "SELECT * FROM Users WHERE user_name =\"" + uName + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,9);
+        if(isUserExist(check))
+            return false;
+
         String sql = "INSERT INTO Users (user_name,password,first_name,last_name,email,phone,CardNumber,ExpirationDate,SecurityCode) VALUES(?,?,?,?,?,?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -106,9 +129,14 @@ public class Model {
         } catch (SQLException e) {
             System.out.println(e.getStackTrace());
         }
+        return true;
     }
 
-    public void deleteUser(String userName) {
+    public boolean deleteUser(String userName) {
+        String sqlCheck = "SELECT * FROM Users WHERE user_name =\"" + userName + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,9);
+        if(isUserExist(check)==false)
+            return false;
         String sql = "DELETE FROM Users WHERE user_name = \"" + userName+ "\"";
 
         try (Connection conn = this.connect();
@@ -120,10 +148,15 @@ public class Model {
         } catch (SQLException e) {
             System.out.println("not bgoood");
         }
+        return true;
     }
 
-    public void updateUser(String file, String theNewOne,String uName) throws SQLException {
-        String sql = "SELECT user_name FROM Users WHERE user_name=\"" + uName+ "\"";
+    public boolean updateUser(String file, String theNewOne,String uName) throws SQLException {
+        String sqlCheck = "SELECT * FROM Users WHERE user_name =\"" + uName + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,9);
+        if(isUserExist(check)==false)
+            return false;
+        String sql = "SELECT * FROM Users WHERE user_name=\"" + uName+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,9);
 
         if(file.equals("uName")){
@@ -163,13 +196,18 @@ public class Model {
                     oldFiles.get(4),oldFiles.get(5),oldFiles.get(6),oldFiles.get(7),theNewOne);
         }
         deleteUser(oldFiles.get(0));
+        return true;
     }
 
-    private void insertOrder (String productId, String order_details, String user_name,String des_time, String order_time,String status,String price) throws SQLException {
-        String sql = "INSERT INTO Orders (productID, order_details, user_name, des_time, order_time,status,price) VALUES(?,?,?,?,?,?,?)";
+    private boolean insertOrder (String orderId, String order_details, String user_name,String des_time, String order_time,String status,String price) throws SQLException {
+        String sqlCheck = "SELECT * FROM Orders WHERE orderID =\"" + orderId + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,7);
+        if(isUserExist(check))
+            return false;
+        String sql = "INSERT INTO Orders (orderID, order_details, user_name, des_time, order_time,status,price) VALUES(?,?,?,?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, productId);
+            pstmt.setString(1, orderId);
             pstmt.setString(2, order_details);
             pstmt.setString(3, user_name);
             pstmt.setString(4, des_time);
@@ -181,10 +219,15 @@ public class Model {
             System.out.println(e.getStackTrace());
 
         }
+        return true;
     }
 
-    public void deleteOrder(String orderId) {
-        String sql = "DELETE FROM Orders WHERE productID = \"" + orderId+ "\"";
+    public boolean deleteOrder(String orderId) {
+        String sqlCheck = "SELECT * FROM Orders WHERE orderID =\"" + orderId + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,7);
+        if(isUserExist(check)==false)
+            return false;
+        String sql = "DELETE FROM Orders WHERE orderID = \"" + orderId+ "\"";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -195,10 +238,15 @@ public class Model {
         } catch (SQLException e) {
             System.out.println("not bgoood");
         }
+        return true;
     }
 
-    public void updateOrder(String file, String theNewOne,String pId) throws SQLException {
-        String sql = "SELECT productId FROM Orders WHERE productId=\"" + pId+ "\"";
+    public boolean updateOrder(String file, String theNewOne,String oId) throws SQLException {
+        String sqlCheck = "SELECT * FROM Orders WHERE orderID =\"" + oId + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,7);
+        if(isUserExist(check)==false)
+            return false;
+        String sql = "SELECT * FROM Orders WHERE productID=\"" + oId+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,7);
 
         if(file.equals("productId")){
@@ -232,9 +280,14 @@ public class Model {
         }
 
         deleteOrder(oldFiles.get(0));
+        return true;
     }
 
-    private void insertProduct (String name, String supply, String price, String category){
+    private boolean insertProduct (String name, String supply, String price, String category){
+        String sqlCheck = "SELECT * FROM Products WHERE product_name =\"" + name + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,4);
+        if(isUserExist(check))
+            return false;
         String sql = "INSERT INTO Products(product_name,supply,price,category) VALUES(?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -246,9 +299,14 @@ public class Model {
         } catch (SQLException e) {
             System.out.println(e.getStackTrace());
         }
+        return true;
     }
 
-    public void deleteProduct(String productName) {
+    public boolean deleteProduct(String productName) {
+        String sqlCheck = "SELECT * FROM Products WHERE product_name =\"" + productName + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,4);
+        if(isUserExist(check)==false)
+            return false;
         String sql = "DELETE FROM Products WHERE product_name = \"" + productName+ "\"";
 
         try (Connection conn = this.connect();
@@ -260,11 +318,16 @@ public class Model {
         } catch (SQLException e) {
             System.out.println(e.getStackTrace());
         }
+        return true;
     }
 
 
-    public void updateProduct(String file, String theNewOne, String pName) throws SQLException {
-        String sql = "SELECT product_name FROM Users WHERE product_name=\"" + pName+ "\"";
+    public boolean updateProduct(String file, String theNewOne, String pName) throws SQLException {
+        String sqlCheck = "SELECT * FROM Products WHERE product_name =\"" + pName + "\"";
+        ArrayList<String> check= getRecordsFieldsValues(sqlCheck,4);
+        if(isUserExist(check)==false)
+            return false;
+        String sql = "SELECT * FROM Products WHERE product_name=\"" + pName+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,4);
 
         if(file.equals("product_name")){
@@ -282,6 +345,7 @@ public class Model {
         }
 
         deleteProduct(oldFiles.get(0));
+        return true;
     }
 
     public void addProductToOrder(List<String> products,String user_name, String des_time, String order_time, String status) throws SQLException {
@@ -290,13 +354,12 @@ public class Model {
         ArrayList<String> info;
         for(int i=0;i<products.size()-1;i++) {
             myProducs = myProducs + products.get(i) + " ";
-            String sql = "INSERT INTO Products(name,supply,price,category) VALUES(?,?,?,?)";
+            String sql = "SELECT * FROM Products WHERE product_name =\"" + products.get(i) + "\"";
             info=getRecordsFieldsValues(sql,4);
             sum=sum+Integer.valueOf(info.get(2));
-
         }
         myProducs=myProducs+products.get(products.size()-1);///for the split after
-        String sql = "INSERT INTO Products(name,supply,price,category) VALUES(?,?,?,?)";
+        String sql = "SELECT * FROM Products WHERE product_name =\"" + products.get(products.size()-1) + "\"";
         info=getRecordsFieldsValues(sql,4);
         sum=sum+Integer.valueOf(info.get(2));
 
