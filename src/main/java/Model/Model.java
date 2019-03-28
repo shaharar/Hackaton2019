@@ -1,13 +1,20 @@
 package Model;
 
+import java.sql.*;
+import Controller.Controller;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class Model {
+
+     Controller controller;
+
     //constructor
-    public Model() {
+    public Model(Controller controller) {
+        this.controller = controller;
     }
 
     private Connection connect() {
@@ -35,5 +42,5 @@ public class Model {
             System.out.println("not goodddd");
         }
     }
-    
+
 }
