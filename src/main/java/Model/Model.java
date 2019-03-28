@@ -1,5 +1,6 @@
 package Model;
 
+import java.sql.*;
 import Controller.Controller;
 
 import java.sql.Connection;
@@ -39,4 +40,29 @@ public class Model {
         return false;
     }*/
 
+
+    public String getFieldValue(int index){
+        return "";
+    }
+
+        public boolean inventoryCheck(String productName) {
+        String[] fields = new String[4];
+        String sql = "SELECT * FROM Products WHERE NAME =\"" + productName + "\"";
+        try (Connection conn = this.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            int i = 0;
+            // loop
+            if (rs.next()) {
+                for (int j = 0; j < 4; j++) {
+                    fields[j] = rs.getString(j + 1);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getStackTrace());
+            return false;
+
+        }
+        return false;
+    }
 }
