@@ -14,7 +14,7 @@ import java.util.List;
 public class Model {
 
      Controller controller;
-     static int counterOfOrders=1;
+     static int counterOfOrders = 1;
     ArrayList<String> currentUser;
 
     //constructor
@@ -43,9 +43,7 @@ public class Model {
             if(userInfo != null){
                 return true;
             }
-            else{
                 return false;
-            }
         }
 
     private Connection connect() {
@@ -82,17 +80,17 @@ public class Model {
     public boolean inventoryCheck(String productName) {
         String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + productName + "\"";
         ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
-        if (Integer.parseInt(recordValues.get(2)) > 0 ){
+        if (Integer.parseInt(recordValues.get(1)) > 0 ){
             return true;
         }
         return false;
     }
 
-    private void insertUser (String uName, String password, String first_name,String last_name, String email,String phone,String cardNumber, String dateCard,String cvv) throws SQLException {
-        String sql = "INSERT INTO Users (uName,password,first_name,last_name,email,phone,cardNumber,dateCard,cvv) VALUES(?,?,?,?,?,?,?,?,?)";
+    private void insertUser (String user_name, String password, String first_name,String last_name, String email,String phone,String cardNumber, String dateCard,String cvv) throws SQLException {
+        String sql = "INSERT INTO Users (user_name,password,first_name,last_name,email,phone,cardNumber,dateCard,cvv) VALUES(?,?,?,?,?,?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, uName);
+            pstmt.setString(1, user_name);
             pstmt.setString(2, password);
             pstmt.setString(3, first_name);
             pstmt.setString(4, last_name);
@@ -108,7 +106,7 @@ public class Model {
     }
 
     public void deleteUser(String userName) {
-        String sql = "DELETE FROM Users WHERE ProductName = \"" + userName+ "\"";
+        String sql = "DELETE FROM Users WHERE user_name = \"" + userName+ "\"";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -122,7 +120,7 @@ public class Model {
     }
 
     public void updateUser(String file, String theNewOne,String uName) throws SQLException {
-        String sql = "SELECT user_name FROM Users WHERE user_name=\"" + uName+ "\"";
+        String sql = "SELECT * FROM Users WHERE user_name=\"" + uName+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,9);
 
         if(file.equals("uName")){
@@ -165,7 +163,7 @@ public class Model {
     }
 
     private void insertOrder (String productId, String order_details, String user_name,String des_time, String order_time,String status,String price) throws SQLException {
-        String sql = "INSERT INTO Orers (productId, order_details, user_name, des_time, order_time,status,price) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Orders (productId, order_details, user_name, des_time, order_time,status,price) VALUES(?,?,?,?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, productId);
@@ -182,7 +180,7 @@ public class Model {
     }
 
     public void deleteOrder(String orderId) {
-        String sql = "DELETE FROM Products WHERE ProductName = \"" + orderId+ "\"";
+        String sql = "DELETE FROM Orders WHERE ProductID = \"" + orderId+ "\"";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -196,7 +194,7 @@ public class Model {
     }
 
     public void updateOrder(String file, String theNewOne,String pId) throws SQLException {
-        String sql = "SELECT productId FROM Orders WHERE productId=\"" + pId+ "\"";
+        String sql = "SELECT * FROM Orders WHERE productId=\"" + pId+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,7);
 
         if(file.equals("productId")){
@@ -262,7 +260,7 @@ public class Model {
 
 
     public void updateProduct(String file, String theNewOne, String pName) throws SQLException {
-        String sql = "SELECT product_name FROM Users WHERE product_name=\"" + pName+ "\"";
+        String sql = "SELECT * FROM Products WHERE product_name=\"" + pName+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,4);
 
         if(file.equals("name")){
