@@ -1,5 +1,6 @@
 package Model;
 
+import java.lang.reflect.Array;
 import java.sql.*;
 import java.util.ArrayList;
 import Controller.Controller;
@@ -14,11 +15,38 @@ public class Model {
 
      Controller controller;
      static int counterOfOrders=1;
+    ArrayList<String> currentUser;
 
     //constructor
-//    public Model(Controller controller) {
-//        this.controller = controller;
-//    }
+    public Model(Controller controller) {
+        this.controller = controller;
+    }
+
+        public boolean login(String username, String password) {
+            String sql = "SELECT * FROM Users WHERE user_name =\"" + username + "\"";
+            ArrayList<String> userInfo = getRecordsFieldsValues(sql, 9);
+            if(isUserExist(userInfo)){ //if user was found in db
+            String realPass = getPassword(userInfo);
+            if( realPass.equals(password)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+        private String getPassword(ArrayList<String> userInfo) {
+            return userInfo.get(1);
+        }
+
+
+        private boolean isUserExist(ArrayList<String> userInfo) {
+            if(userInfo != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
     private Connection connect() {
         // SQLite connection string
@@ -37,8 +65,14 @@ public class Model {
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sqlQuery)) {
-            for (int i = 1; i < numOfColumns; i++) {
-                recordsFieldsValues.add(rs.getString(i));
+            if (rs.next()){
+                for (int i = 1; i < numOfColumns + 1; i++) {
+                    recordsFieldsValues.add(rs.getString(i));
+                }
+            }
+
+            else{
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -47,7 +81,7 @@ public class Model {
     }
 
     public boolean inventoryCheck(String productName) {
-        String sqlQuery = "SELECT * FROM Products WHERE NAME =\"" + productName + "\"";
+        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + productName + "\"";
         ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
         if (Integer.parseInt(recordValues.get(2)) > 0 ){
             return true;
@@ -227,6 +261,7 @@ public class Model {
         }
     }
 
+
     public void updateProduct(String file, String theNewOne, String pName) throws SQLException {
         String sql = "SELECT product_name FROM Users WHERE product_name=\"" + pName+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,4);
@@ -267,8 +302,21 @@ public class Model {
         insertOrder(String.valueOf(counterOfOrders),myProducs,user_name,des_time,order_time,status,String.valueOf(sum));
     }
     public  static void main(String [] args){
-        Model m= new Model();
-        m.insertProduct("roni", "rm", "34","35");
+     //   Model m= new Model();
+////        m.insertProduct("roni", "rm", 34,"35");
+//        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + "yarden" + "\"";
+//        ArrayList<String> record = m.getRecordsFieldsValues(sqlQuery,4);
+//        if (record == null){
+//            System.out.println("record doesn't exist");
+//        }
+//        else{
+//            for (int i = 0; i < record.size(); i++){
+//                System.out.println(record.get(i));
+//            }
+//        }
+
+
+
 
     }
 }

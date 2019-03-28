@@ -14,6 +14,13 @@ public class AView {
     Controller controller;
     Stage MainStage;
 
+    public void setMainStage(Stage stage) {
+        this.MainStage = stage;
+    }
+
+    public void setController(Controller controller){
+        this.controller=controller;
+    };
     public void ChangeScene(String fxml) {
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = null;
