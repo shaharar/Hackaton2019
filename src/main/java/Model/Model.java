@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class Model {
 
-     Controller controller;
+    Controller controller;
 
     //constructor
 //    public Model(Controller controller) {
@@ -30,44 +30,47 @@ public class Model {
         return conn;
     }
 
-    public ArrayList<String> getRecordsFieldsValues(String sqlQuery, int numOfColumns){
+    public ArrayList<String> getRecordsFieldsValues(String sqlQuery, int numOfColumns) {
         ArrayList<String> recordsFieldsValues = new ArrayList<>();
-    private void insert(String name, String supply, int price, String category){
-        String sql = "INSERT INTO Users(USERNAME,PASSWORD,FIRSTNAME,LASTNAME,BIRTHDATE,CITY) VALUES(?,?,?,?,?,?)";
-
-    private void insertUser (String name, String supply, int price, String category){
-        String sql = "INSERT INTO Products(name,supply,price,category) VALUES(?,?,?,?)";
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sqlQuery)) {
-            for (int i = 1; i < numOfColumns; i++){
+            for (int i = 1; i < numOfColumns; i++) {
                 recordsFieldsValues.add(rs.getString(i));
             }
-            return recordsFieldsValues;
-
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, name);
-            pstmt.setString(2, supply);
-            pstmt.setInt(3, price);
-            pstmt.setString(4, category);
-            pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getStackTrace());
-            return null;
+            e.printStackTrace();
         }
+        return recordsFieldsValues;
     }
 
-        public boolean inventoryCheck(String productName) {
+    public boolean inventoryCheck(String productName) {
         String sqlQuery = "SELECT * FROM Products WHERE NAME =\"" + productName + "\"";
         ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
         if (Integer.parseInt(recordValues.get(2)) > 0 ){
             return true;
+        }
+        return false;
+    }
+
+    private void insertUser (String uName, String password, String first_name,String last_name, String email,String phone) throws SQLException {
+        String sql = "INSERT INTO Users (uName,password,first_name,last_name,email,phone) VALUES(?,?,?,?,?,?)";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, uName);
+            pstmt.setString(2, password);
+            pstmt.setString(3, first_name);
+            pstmt.setString(4, last_name);
+            pstmt.setString(5, email);
+            pstmt.setString(6, phone);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
             System.out.println("not goodddd");
         }
     }
 
-    public void DeleteUser(String productName) {
-        String sql = "DELETE FROM Products WHERE ProductName = \"" + productName+ "\"";
+    public void DeleteUser(String userName) {
+        String sql = "DELETE FROM Users WHERE ProductName = \"" + userName+ "\"";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -79,8 +82,6 @@ public class Model {
             System.out.println("not bgoood");
         }
     }
-
-
 
     private void insertProduct (String name, String supply, int price, String category){
         String sql = "INSERT INTO Products(name,supply,price,category) VALUES(?,?,?,?)";
@@ -109,6 +110,7 @@ public class Model {
             System.out.println("not bgoood");
         }
     }
+
 
     public  static void main(String [] args){
         Model m= new Model();
