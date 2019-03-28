@@ -146,7 +146,7 @@ public class Model {
 
 
     public  static void main(String [] args){
-        Model m= new Model();
+     //   Model m= new Model();
 ////        m.insertProduct("roni", "rm", 34,"35");
 //        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + "yarden" + "\"";
 //        ArrayList<String> record = m.getRecordsFieldsValues(sqlQuery,4);
