@@ -18,10 +18,10 @@ public class LoginView extends AView {
 
 
     public void login() {
-        if (controller.login(txtfld_username_login.getText(), pswfld_password_login.getText())) {
-            ChangeScene("website.fxml");
-        } else {
-            showAlert("Incorrect Username/Password. Please try Again");
-        }
+//        if (controller.login(txtfld_username_login.getText(), pswfld_password_login.getText())) {
+//            ChangeScene("website.fxml");
+//        } else {
+//            showAlert("Incorrect Username/Password. Please try Again");
+//        }
     }
 }
