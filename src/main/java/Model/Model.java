@@ -43,4 +43,23 @@ public class Model {
         }
         return false;
     }
+
+    private void insert(String name, String supply, int price, String category){
+        String sql = "INSERT INTO Products(product_name,supply,price,category) VALUES(?,?,?,?)";
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, supply);
+            pstmt.setInt(3, price);
+            pstmt.setString(4, category);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("not goodddd");
+        }
+    }
+    public  static void main(String [] args){
+        Model m= new Model();
+        m.insert("roni", "rm", 34,"35");
+
+    }
 }
