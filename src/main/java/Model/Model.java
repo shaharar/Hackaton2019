@@ -18,9 +18,9 @@ public class Model {
     ArrayList<String> currentUser;
 
     //constructor
-    public Model(Controller controller) {
-        this.controller = controller;
-    }
+//    public Model(Controller controller) {
+//        this.controller = controller;
+//    }
 
         public boolean login(String username, String password) {
             String sql = "SELECT * FROM Users WHERE user_name =\"" + username + "\"";
@@ -90,7 +90,7 @@ public class Model {
     }
 
     private void insertUser (String uName, String password, String first_name,String last_name, String email,String phone,String cardNumber, String dateCard,String cvv) throws SQLException {
-        String sql = "INSERT INTO Users (uName,password,first_name,last_name,email,phone,cardNumber,dateCard,cvv) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Users (user_name,password,first_name,last_name,email,phone,CardNumber,ExpirationDate,SecurityCode) VALUES(?,?,?,?,?,?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, uName);
@@ -104,12 +104,12 @@ public class Model {
             pstmt.setString(9, cvv);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("not goodddd");
+            System.out.println(e.getStackTrace());
         }
     }
 
     public void deleteUser(String userName) {
-        String sql = "DELETE FROM Users WHERE ProductName = \"" + userName+ "\"";
+        String sql = "DELETE FROM Users WHERE user_name = \"" + userName+ "\"";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -166,7 +166,7 @@ public class Model {
     }
 
     private void insertOrder (String productId, String order_details, String user_name,String des_time, String order_time,String status,String price) throws SQLException {
-        String sql = "INSERT INTO Orers (productId, order_details, user_name, des_time, order_time,status,price) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO Orders (productID, order_details, user_name, des_time, order_time,status,price) VALUES(?,?,?,?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, productId);
@@ -178,12 +178,13 @@ public class Model {
             pstmt.setString(7, price);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("not goodddd");
+            System.out.println(e.getStackTrace());
+
         }
     }
 
     public void deleteOrder(String orderId) {
-        String sql = "DELETE FROM Products WHERE ProductName = \"" + orderId+ "\"";
+        String sql = "DELETE FROM Orders WHERE productID = \"" + orderId+ "\"";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -234,7 +235,7 @@ public class Model {
     }
 
     private void insertProduct (String name, String supply, String price, String category){
-        String sql = "INSERT INTO Products(name,supply,price,category) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO Products(product_name,supply,price,category) VALUES(?,?,?,?)";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, name);
@@ -243,12 +244,12 @@ public class Model {
             pstmt.setString(4, category);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("not goodddd");
+            System.out.println(e.getStackTrace());
         }
     }
 
     public void deleteProduct(String productName) {
-        String sql = "DELETE FROM Products WHERE ProductName = \"" + productName+ "\"";
+        String sql = "DELETE FROM Products WHERE product_name = \"" + productName+ "\"";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -257,7 +258,7 @@ public class Model {
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            System.out.println("not bgoood");
+            System.out.println(e.getStackTrace());
         }
     }
 
@@ -266,7 +267,7 @@ public class Model {
         String sql = "SELECT product_name FROM Users WHERE product_name=\"" + pName+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,4);
 
-        if(file.equals("name")){
+        if(file.equals("product_name")){
             insertProduct(theNewOne,oldFiles.get(1),oldFiles.get(2),oldFiles.get(3));
         }
         else if(file.equals("supply")){
@@ -301,9 +302,11 @@ public class Model {
 
         insertOrder(String.valueOf(counterOfOrders),myProducs,user_name,des_time,order_time,status,String.valueOf(sum));
     }
-    public  static void main(String [] args){
-     //   Model m= new Model();
-////        m.insertProduct("roni", "rm", 34,"35");
+    public  static void main(String [] args) throws SQLException {
+        Model m= new Model();
+//        m.insertProduct("yarden", "rm", "70","35");
+//        m.insertOrder("yarden", "rm", "70","35","100","clwvkn","flwkjf");
+//        m.insertUser("yarden", "rm","clskvjdv","sdvslkjs", "70","35","100","clwvkn","flwkjf");
 //        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + "yarden" + "\"";
 //        ArrayList<String> record = m.getRecordsFieldsValues(sqlQuery,4);
 //        if (record == null){
@@ -314,6 +317,9 @@ public class Model {
 //                System.out.println(record.get(i));
 //            }
 //        }
+//        m.deleteProduct("einat");
+//        m.deleteUser("einat");
+//        m.deleteOrder("einat");
 
 
 
