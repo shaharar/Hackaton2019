@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="האקתון" target="1.5" />
+      <module name="האקתון" target="7" />
     </bytecodeTargetLevel>
   </component>
 </project>
