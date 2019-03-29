@@ -18,9 +18,9 @@ public class Model {
     ArrayList<String> currentUser;
 
     //constructor
-//    public Model(Controller controller) {
-//        this.controller = controller;
-//    }
+    public Model(Controller controller) {
+        this.controller = controller;
+    }
 
         public boolean login(String username, String password) {
             String sql = "SELECT * FROM Users WHERE user_name =\"" + username + "\"";
