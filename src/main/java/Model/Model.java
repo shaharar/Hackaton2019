@@ -4,6 +4,8 @@ import java.lang.reflect.Array;
 import java.sql.*;
 import java.util.ArrayList;
 import Controller.Controller;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,6 +18,8 @@ public class Model {
      Controller controller;
      static int counterOfOrders=1;
     ArrayList<String> currentUser;
+    boolean isAdmin = false;
+
 
     //constructor
     public Model(Controller controller) {
@@ -412,6 +416,29 @@ public class Model {
         insertOrder(String.valueOf(counterOfOrders),myProducs,user_name,des_time,order_time,status,String.valueOf(sum));
         return true;
     }
+
+    public void signUp(String txt_username, String psw_password, String txt_firstName, String txt_lastName, String txt_email, String txt_phone, String txt_cardNo, String txt_expDate, String txt_cvv, String admin) {
+        try {
+            insertUser(txt_username,psw_password,txt_firstName,txt_lastName,txt_email,txt_phone,txt_cardNo,txt_expDate,txt_cvv);
+            ArrayList<String> userInfo = new ArrayList<String>();
+            userInfo.add(txt_username);
+            userInfo.add(psw_password);
+            userInfo.add(txt_firstName);
+            userInfo.add(txt_lastName);
+            userInfo.add(txt_email);
+            userInfo.add(txt_phone);
+            userInfo.add(txt_cardNo);
+            userInfo.add(txt_expDate);
+            userInfo.add(txt_cvv);
+            currentUser = userInfo;
+            if(!admin.equals("")){
+                isAdmin = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+/*    public  static void main(String [] args) throws SQLException {
 
     public boolean updateStatus(String orderId) throws SQLException {
         boolean bool;
