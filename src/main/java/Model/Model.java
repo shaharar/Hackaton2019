@@ -18,9 +18,9 @@ public class Model {
     ArrayList<String> currentUser;
 
     //constructor
-    public Model(Controller controller) {
-        this.controller = controller;
-    }
+//    public Model(Controller controller) {
+//        this.controller = controller;
+   // }
 
         public boolean login(String username, String password) {
             String sql = "SELECT * FROM Users WHERE user_name =\"" + username + "\"";
@@ -404,10 +404,10 @@ public class Model {
         for(int i=0;i<products.size();i++) {
             lessCounter(products.get(i));
         }
-        myProducs=myProducs+products.get(products.size()-1);///for the split after
-        String sql = "SELECT * FROM Products WHERE product_name =\"" + products.get(products.size()-1) + "\"";
-        info=getRecordsFieldsValues(sql,4);
-        sum=sum+Integer.valueOf(info.get(2));
+//        myProducs=myProducs+products.get(products.size()-1);///for the split after
+//        String sql = "SELECT * FROM Products WHERE product_name =\"" + products.get(products.size()-1) + "\"";
+//        info=getRecordsFieldsValues(sql,4);
+//        sum=sum+Integer.valueOf(info.get(2));
 
         insertOrder(String.valueOf(counterOfOrders),myProducs,user_name,des_time,order_time,status,String.valueOf(sum));
         return true;
@@ -415,8 +415,9 @@ public class Model {
 
     public boolean updateStatus(String orderId) throws SQLException {
         boolean bool;
-        String sqlCheck = "SELECT status FROM Orders WHERE orderID =\"" + orderId + "\"";
-        if(sqlCheck.equals(OrderStatus.IN_PROCESS))
+        String sqlCheck = "SELECT * FROM Orders WHERE orderID =\"" + orderId + "\"";
+        ArrayList<String> array=getRecordsFieldsValues(sqlCheck,7);
+        if(array.get(5).equals(OrderStatus.IN_PROCESS))
             bool = updateOrder("status", "DONE", orderId);
         else if(sqlCheck.equals(OrderStatus.APPROVED))
             bool=updateOrder("status","IN_PROCESS", orderId);
@@ -426,18 +427,23 @@ public class Model {
     }
 
     public boolean checkStatus(String orderid){
-        String sqlCheck = "SELECT status FROM Orders WHERE orderID =\"" + orderid + "\"";
-        ArrayList<String>products=getRecordsFieldsValues(sqlCheck,7);
-        if(sqlCheck.equals("DONE")) {
+        String sqlCheck = "SELECT * FROM Orders WHERE orderID =\"" + orderid + "\"";
+        ArrayList<String>array=getRecordsFieldsValues(sqlCheck,7);
+        if(array.get(5).equals("DONE")) {
             deleteOrder(orderid);
             return true;
         }
         else
             return false;
     }
+
     public String checkOrderId(String userName){
         String toReturn="";
-        String sqlCheck = "SELECT * FROM Orders WHERE user_name =\"" + userName + "\"";
+        String sql = "SELECT * FROM Orders WHERE user_name =\"" + userName + "\"";
+        ArrayList<String>array=getRecordsFieldsValues(sql,7);
+        String sqlCheck="";
+        for(int i=0;i<array.size();i++)
+            sqlCheck=sqlCheck+array.get(i);
         String[]myOrders=sqlCheck.split(" ");
         if(myOrders.length>7){
             for(int i=0;i<myOrders.length;i=i+7){
@@ -452,24 +458,62 @@ public class Model {
         return toReturn;
     }
 
+    public ArrayList <ArrayList<String>> getRecords (String sqlQuery, int numOfColumns){
+        ArrayList<ArrayList<String>> recordsFieldsValues = new ArrayList<>();
+        try (Connection conn = this.connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sqlQuery)) {
+            while (rs.next()){
+                ArrayList<String> record = new ArrayList<>();
+                for (int i = 1; i < numOfColumns + 1; i++) {
+                    record.add(rs.getString(i));
+                }
+                recordsFieldsValues.add(record);
+            }
+            if (recordsFieldsValues.size() == 0){
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return recordsFieldsValues;
+    }
+
+    public List<String> showOrders(){
+        ArrayList<String> ordersList=new ArrayList<>();
+        String sqlCheck = "SELECT * FROM Orders";
+        String toAdd="";
+       ArrayList<ArrayList<String>> allOrders=getRecords(sqlCheck,7);
+       if(allOrders==null)
+           System.out.println("nullllllll");
+       for(int i=0;i<allOrders.size();i++){
+           for(int j=0;j<allOrders.get(i).size();j++){
+               toAdd=toAdd+allOrders.get(i).get(j)+" ";
+           }
+           ordersList.add(toAdd);
+           System.out.println(toAdd);
+           toAdd="";
+        }
+        return ordersList;
+    }
     public  static void main(String [] args) throws SQLException {
         Model m= new Model();
-
+        m.showOrders();
+//
         ArrayList<String>list=new ArrayList<>();
-        list.add("klikB");
         list.add("water");
-//        m.deleteOrder("0");
-      //  m.deleteOrder("0");
+        list.add("klikB");
+        m.deleteOrder("0");
 //        m.deleteProduct("yarden");
 //        m.deleteUser("yarden");
 //        m.deleteOrder("2");
 //        m.updateProduct("supply","15","klikB");
        // m.addProductToOrder(list, "yarden", "7:00","7:20","ok");
-//        m.addProductToOrder(list, "eini", "7:00","7:20","ok");
+        m.addProductToOrder(list, "tali", "7:00","7:20","ok");
         //m.insertProduct("yarden", "rm", "70","35");
         //m.insertUser("yarden", "rm","clskvjdv","sdvslkjs", "70","35","100","clwvkn","flwkjf");
        // m.updateUser("password","000000","yarden");
-        m.updateOrder("price","000000","1");
+      //  m.updateOrder("price","000000","1");
        // m.updateProduct("price", "111111","yarden");
 
 //        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + "yarden" + "\"";
