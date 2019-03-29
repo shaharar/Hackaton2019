@@ -52,6 +52,7 @@ public class MainWebsiteView extends AView{
 
     public void login() {
         if (controller.login(txt_username_login.getText(), psw_password_login.getText())) {
+            showAlert("Log In Successful!");
          //   ChangeScene("website.fxml");
         } else {
             showAlert("Incorrect Username/Password. Please try again");

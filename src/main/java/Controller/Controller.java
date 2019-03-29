@@ -18,10 +18,10 @@ public class Controller {
     Model model;
     View.AView view;
 
-//    public Controller(MainWebsiteView website) {
-//        this.model = new Model(this);
-//        this.view = website;
-//    }
+    public Controller(MainWebsiteView website) {
+        this.model = new Model(this);
+        this.view = website;
+    }
 
     public void openwindow(String fxmlfile, Object Parameter) {
         FXMLLoader fxmlLoader = new FXMLLoader();

@@ -14,16 +14,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         FXMLLoader fxmlLoader = new FXMLLoader();
         Parent root = fxmlLoader.load(getClass().getClassLoader().getResource("website.fxml").openStream());
-        primaryStage.setTitle("Welcome to CoffeePickUp");
+        primaryStage.setTitle("Welcome to CoffeePick-App");
         Scene scene = new Scene(root, 700, 500);
         primaryStage.setScene(scene);
         website = fxmlLoader.getController();
         website.setMainStage(primaryStage);
-      //  Controller con = new Controller(website);
-     //   AView.setController(con);
-        //  scene.getStylesheets().add(getClass().getClassLoader().getResource("ViewStyle.css").toExternalForm());
+        Controller con = new Controller(website);
+        AView.setController(con);
         primaryStage.show();
-       // loginView.btn_Login.requestFocus();
     }
 
 
