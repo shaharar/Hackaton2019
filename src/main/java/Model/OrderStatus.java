@@ -1,5 +1,5 @@
 package Model;
 
 public enum OrderStatus {
-    DONE,IN_PROCESS;
+    DONE,IN_PROCESS, APPROVED;
 }
