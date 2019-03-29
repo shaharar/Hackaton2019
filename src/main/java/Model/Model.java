@@ -39,14 +39,12 @@ public class Model {
         }
 
 
-
         private boolean isUserExist(ArrayList<String> userInfo) {
             if(userInfo != null){
                 return true;
             }
                 return false;
         }
-
 
     private boolean isProductExist(ArrayList<String> productInfo) {
         if(productInfo != null){
@@ -97,13 +95,29 @@ public class Model {
         return recordsFieldsValues;
     }
 
-    public boolean inventoryCheck(String productName) {
+    public boolean inventoryCheck(String productName) throws SQLException {
         String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + productName + "\"";
         ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
-        if (Integer.parseInt(recordValues.get(1)) > 0 ){
+        int supply=Integer.parseInt(recordValues.get(1));
+        if (supply > 0 ){
             return true;
         }
         return false;
+    }
+    public void lessCounter(String productName) throws SQLException {
+        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + productName + "\"";
+        ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
+        int supply=Integer.parseInt(recordValues.get(1));
+        supply=supply-1;
+        updateProduct("supply",String.valueOf(supply),productName);
+    }
+
+    public void upCounter(String productName) throws SQLException {
+        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + productName + "\"";
+        ArrayList <String> recordValues = getRecordsFieldsValues(sqlQuery, 4);
+        int supply=Integer.parseInt(recordValues.get(1));
+        supply=supply+1;
+        updateProduct("supply",String.valueOf(supply),productName);
     }
 
     private boolean insertUser (String uName, String password, String first_name,String last_name, String email,String phone,String cardNumber, String dateCard,String cvv) throws SQLException {
@@ -246,7 +260,9 @@ public class Model {
         ArrayList<String> check= getRecordsFieldsValues(sqlCheck,7);
         if(isOrderExist(check)==false)
             return false;
-        String sql = "SELECT * FROM Orders WHERE productID=\"" + oId+ "\"";
+        if(oId.equals(OrderStatus.IN_PROCESS)&& !file.equals("status"))
+            return false;
+        String sql = "SELECT * FROM Orders WHERE orderID=\"" + oId+ "\"";
         ArrayList<String> oldFiles=getRecordsFieldsValues(sql,7);
         deleteOrder(oldFiles.get(0));
         if(file.equals("productId")){
@@ -254,8 +270,34 @@ public class Model {
                     oldFiles.get(5),oldFiles.get(6));
         }
         else if(file.equals("order_details")){
-            insertOrder(oldFiles.get(0),theNewOne,oldFiles.get(2),oldFiles.get(3),oldFiles.get(4),
-                    oldFiles.get(5),oldFiles.get(6));
+            if(theNewOne.contains(" ")) {
+                String[]newProducts=theNewOne.split(" ");
+                for(int i=0;i<newProducts.length;i++){
+                    boolean bool=inventoryCheck(newProducts[i]);
+                    if(bool==false)
+                        return false;
+                }
+                for (int i=0;i<newProducts.length;i++){
+                    lessCounter(newProducts[i]);
+                }
+            }
+            else {
+                boolean bool=inventoryCheck(theNewOne);
+                if(bool==false)
+                    return false;
+                else
+                    lessCounter(theNewOne);
+            }
+            if(oldFiles.get(1).contains(" ")){
+                String[]old=oldFiles.get(1).split(" ");
+                for(int i=0;i<old.length;i++){
+                    upCounter(old[i]);
+                }
+            }
+            else
+                upCounter(oldFiles.get(1));
+            insertOrder(oldFiles.get(0), theNewOne, oldFiles.get(2), oldFiles.get(3), oldFiles.get(4),
+                    oldFiles.get(5), oldFiles.get(6));
         }
         else if(file.equals("user_name")){
             insertOrder(oldFiles.get(0),oldFiles.get(1),theNewOne,oldFiles.get(3),oldFiles.get(4),
@@ -346,15 +388,21 @@ public class Model {
         return true;
     }
 
-    public void addProductToOrder(ArrayList<String> products,String user_name, String des_time, String order_time, String status) throws SQLException {
+    public boolean addProductToOrder(ArrayList<String> products,String user_name, String des_time, String order_time, String status) throws SQLException {
         String myProducs="";
         int sum=0;
         ArrayList<String> info;
-        for(int i=0;i<products.size()-1;i++) {
+        for(int i=0;i<products.size();i++) {
+            boolean bool=inventoryCheck(products.get(i));
+            if(bool==false)
+                return false;
             myProducs = myProducs + products.get(i) + " ";
             String sql = "SELECT * FROM Products WHERE product_name =\"" + products.get(i) + "\"";
             info=getRecordsFieldsValues(sql,4);
             sum=sum+Integer.valueOf(info.get(2));
+        }
+        for(int i=0;i<products.size();i++) {
+            lessCounter(products.get(i));
         }
         myProducs=myProducs+products.get(products.size()-1);///for the split after
         String sql = "SELECT * FROM Products WHERE product_name =\"" + products.get(products.size()-1) + "\"";
@@ -362,36 +410,67 @@ public class Model {
         sum=sum+Integer.valueOf(info.get(2));
 
         insertOrder(String.valueOf(counterOfOrders),myProducs,user_name,des_time,order_time,status,String.valueOf(sum));
+        return true;
     }
 
     public boolean updateStatus(String orderId) throws SQLException {
-            boolean bool=updateOrder("status","done", orderId);
-            return bool;
+        boolean bool;
+        String sqlCheck = "SELECT status FROM Orders WHERE orderID =\"" + orderId + "\"";
+        if(sqlCheck.equals(OrderStatus.IN_PROCESS))
+            bool = updateOrder("status", "DONE", orderId);
+        else if(sqlCheck.equals(OrderStatus.APPROVED))
+            bool=updateOrder("status","IN_PROCESS", orderId);
+        else
+            bool=false;
+        return bool;
     }
 
     public boolean checkStatus(String orderid){
-        String sqlCheck = "SELECT * FROM Orders WHERE orderID =\"" + orderid + "\"";
+        String sqlCheck = "SELECT status FROM Orders WHERE orderID =\"" + orderid + "\"";
         ArrayList<String>products=getRecordsFieldsValues(sqlCheck,7);
-        if(products.get(5).equals("done"))
+        if(sqlCheck.equals("DONE")) {
+            deleteOrder(orderid);
             return true;
+        }
         else
             return false;
     }
+    public String checkOrderId(String userName){
+        String toReturn="";
+        String sqlCheck = "SELECT * FROM Orders WHERE user_name =\"" + userName + "\"";
+        String[]myOrders=sqlCheck.split(" ");
+        if(myOrders.length>7){
+            for(int i=0;i<myOrders.length;i=i+7){
+                if(i>myOrders.length)
+                    break;
+                toReturn=toReturn+myOrders[i];
+            }
+        }
+        else
+            toReturn=toReturn+myOrders[0];
+
+        return toReturn;
+    }
 
     public  static void main(String [] args) throws SQLException {
-//        Model m= new Model();
-//        ArrayList<String>list=new ArrayList<>();
-//        list.add("klikB");
-//        list.add("water");
-//        m.deleteOrder("1");
-//        m.addProductToOrder(list, "noa", "7:00","7:20","ok");
-//        m.addProductToOrder(list, "noaaa", "7:00","7:20","ok");
-//        m.insertOrder("yarden", "rm", "70","35","100","clwvkn","flwkjf");
-       // m.insertUser("yarden", "rm","clskvjdv","sdvslkjs", "70","35","100","clwvkn","flwkjf");
+        Model m= new Model();
+
+        ArrayList<String>list=new ArrayList<>();
+        list.add("klikB");
+        list.add("water");
+//        m.deleteOrder("0");
+      //  m.deleteOrder("0");
 //        m.deleteProduct("yarden");
 //        m.deleteUser("yarden");
-//        m.updateUser("password","000000","yarden");
-//        m.updateProduct("price", "111111","yarden");
+//        m.deleteOrder("2");
+//        m.updateProduct("supply","15","klikB");
+       // m.addProductToOrder(list, "yarden", "7:00","7:20","ok");
+//        m.addProductToOrder(list, "eini", "7:00","7:20","ok");
+        //m.insertProduct("yarden", "rm", "70","35");
+        //m.insertUser("yarden", "rm","clskvjdv","sdvslkjs", "70","35","100","clwvkn","flwkjf");
+       // m.updateUser("password","000000","yarden");
+        m.updateOrder("price","000000","1");
+       // m.updateProduct("price", "111111","yarden");
 
 //        String sqlQuery = "SELECT * FROM Products WHERE product_name =\"" + "yarden" + "\"";
 //        ArrayList<String> record = m.getRecordsFieldsValues(sqlQuery,4);
