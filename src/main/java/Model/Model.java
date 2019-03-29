@@ -39,12 +39,14 @@ public class Model {
         }
 
 
+
         private boolean isUserExist(ArrayList<String> userInfo) {
             if(userInfo != null){
                 return true;
             }
                 return false;
         }
+
 
     private boolean isProductExist(ArrayList<String> productInfo) {
         if(productInfo != null){
@@ -377,11 +379,11 @@ public class Model {
     }
 
     public  static void main(String [] args) throws SQLException {
-        Model m= new Model();
-        ArrayList<String>list=new ArrayList<>();
-        list.add("klikB");
-        list.add("water");
-        m.deleteOrder("1");
+//        Model m= new Model();
+//        ArrayList<String>list=new ArrayList<>();
+//        list.add("klikB");
+//        list.add("water");
+//        m.deleteOrder("1");
 //        m.addProductToOrder(list, "noa", "7:00","7:20","ok");
 //        m.addProductToOrder(list, "noaaa", "7:00","7:20","ok");
 //        m.insertOrder("yarden", "rm", "70","35","100","clwvkn","flwkjf");
