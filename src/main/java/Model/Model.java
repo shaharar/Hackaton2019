@@ -78,27 +78,6 @@ public class Model {
         return conn;
     }
 
-    public ArrayList <ArrayList<String>> getRecords (String sqlQuery, int numOfColumns){
-        ArrayList<ArrayList<String>> recordsFieldsValues = new ArrayList<>();
-        try (Connection conn = this.connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sqlQuery)) {
-            while (rs.next()){
-                ArrayList<String> record = new ArrayList<>();
-                for (int i = 1; i < numOfColumns + 1; i++) {
-                    record.add(rs.getString(i));
-                }
-                recordsFieldsValues.add(record);
-            }
-            if (recordsFieldsValues.size() == 0){
-                return null;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return recordsFieldsValues;
-    }
-}
 
     public ArrayList<String> getRecordsFieldsValues(String sqlQuery, int numOfColumns) {
         ArrayList<String> recordsFieldsValues = new ArrayList<>();
