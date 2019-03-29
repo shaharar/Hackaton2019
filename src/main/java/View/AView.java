@@ -12,11 +12,16 @@ import java.io.IOException;
 public class AView {
 
     static Controller controller;
-    Stage MainStage;
+    static Stage MainStage;
+    Stage stage;
 
     public void setMainStage(Stage stage) {
         this.MainStage = stage;
     }
+
+    public void setStage(Stage stage){
+        this.stage=stage;
+    };
 
     public static void setController(Controller controller){
         AView.controller = controller;
@@ -43,5 +48,9 @@ public class AView {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(alertMessage);
         alert.show();
+    }
+
+    public void closeWindow(){
+        stage.close();
     }
 }
