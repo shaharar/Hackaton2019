@@ -12,6 +12,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <AnchorPane prefHeight="400.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainWebsiteView">
     <children>
         <ImageView fitHeight="500.0" fitWidth="700.0" layoutX="-1.0">
@@ -27,12 +29,28 @@
                 <Font name="Bodoni MT Bold" size="74.0" />
             </font>
         </Label>
-        <ComboBox fx:id="coffee" layoutX="19.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" promptText="Coffee" style="-fx-background-color: MOCCASIN;" />
-        <ComboBox fx:id="saladMenu" layoutX="281.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" promptText="Salad" style="-fx-background-color: MOCCASIN;" />
+        <!--<ComboBox fx:id="coffeeMenu" layoutX="19.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" promptText="Coffee" style="-fx-background-color: MOCCASIN;" />-->
+        <!--<ComboBox fx:id="saladMenu" layoutX="281.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" promptText="Salad" style="-fx-background-color: MOCCASIN;" />-->
         <ComboBox fx:id="sandwichesMenu" layoutX="519.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" promptText="Sandwiches" style="-fx-background-color: MOCCASIN;" />
         <ComboBox fx:id="pastriesMenu" layoutX="519.0" layoutY="321.0" prefHeight="25.0" prefWidth="107.0" promptText="Pastries" style="-fx-background-color: MOCCASIN;" />
         <ComboBox fx:id="snacksMenu" layoutX="280.0" layoutY="321.0" prefHeight="25.0" prefWidth="107.0" promptText="Snacks" style="-fx-background-color: MOCCASIN;" />
         <ComboBox fx:id="coldMenu" layoutX="19.0" layoutY="321.0" prefHeight="25.0" prefWidth="107.0" promptText="Cold Drink" style="-fx-background-color: MOCCASIN;" />
+        <SplitMenuButton style="-fx-background-color: MOCCASIN;"   fx:id="coffeeMenu" layoutX="19.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" mnemonicParsing="false" text="Coffee" >
+            <items>
+                <MenuItem text="Big Cappuccino - 9 NIS" style="-fx-background-color: MOCCASIN;" />
+                <MenuItem text="Small Cappuccino - 5 NIS"  style="-fx-background-color: MOCCASIN;"  />
+                <MenuItem text="Big Chocolate milk - 9 NIS"  style="-fx-background-color: MOCCASIN;"  />
+                <MenuItem text="Small Chocolate milk - 5 NIS"  style="-fx-background-color: MOCCASIN;"  />
+                <MenuItem text="Big Tea - 5 NIS"  style="-fx-background-color: MOCCASIN;" />
+                <MenuItem text="Small Tea - 3 NIS"  style="-fx-background-color: MOCCASIN;"  />
+            </items>
+        </SplitMenuButton>
+        <SplitMenuButton style="-fx-background-color: MOCCASIN;"  fx:id="saladMenu" layoutX="281.0" layoutY="276.0" prefHeight="25.0" prefWidth="107.0" mnemonicParsing="false" text="Salad" >
+            <items>
+                <MenuItem text="Bulgarian Salad - 14 NIS" style="-fx-background-color: MOCCASIN;" />
+                <MenuItem text="Tuna Cappuccino - 14 NIS"  style="-fx-background-color: MOCCASIN;"  />
+            </items>
+        </SplitMenuButton>
         <Button fx:id="login" layoutX="518.0" layoutY="81.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: MOCCASIN;" text="Login">
             <font>
                 <Font name="System Bold" size="14.0" />

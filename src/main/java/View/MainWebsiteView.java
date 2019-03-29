@@ -4,14 +4,16 @@ import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainWebsiteView extends AView{
     public javafx.scene.control.Button login;
     public javafx.scene.control.Button signup;
-    public ComboBox coffeeMenu;
+    //public javafx.scene.control.ComboBox coffeeMenu;
+    public SplitMenuButton coffeeMenu;
     public CheckBox finish;
-    public ComboBox saladMenu;
+    public SplitMenuButton saladMenu;
     public ComboBox sandwichesMenu;
     public ComboBox coldMenu;
     public ComboBox snacksMenu;
@@ -23,16 +25,27 @@ public class MainWebsiteView extends AView{
     List<CheckMenuItem> snacksOptions = new ArrayList<>();
     List<CheckMenuItem> pastriesOptions = new ArrayList<>();
 
-    public MainWebsiteView() {
-     //   chooseCoffee();
-    }
+//    public MainWebsiteView() {
+//        coffeeMenu = new SplitMenuButton();
+//        List<String> coffeeItems = new ArrayList<>();
+//        coffeeItems.add("Big cappuccino 9 ILS");
+//        coffee_options(coffeeItems);
+//    }
 
-    public void chooseCoffee(){
-       coffeeOptions = new ArrayList<>();
-//        for (String cofee : coffeeType )
-//            coffeeOptions.add(new CheckMenuItem(cofee));
-        coffeeOptions.add(new CheckMenuItem("Big Cap"));
-        coffeeMenu.getItems().addAll(coffeeOptions);
+//    public void coffee_options(List<String> coffee_items){
+//        coffeeOptions = new ArrayList<>();
+//        for (String city : coffee_items )
+//            coffeeOptions.add(new CheckMenuItem(city));
+//        coffeeMenu.getItems().addAll(coffeeOptions);
+//    }
+
+    public void PickCoffee(){
+        if(finish.isSelected()){
+            for (int i = 0; i < coffeeOptions.size(); i++) {
+               // if(coffeeOptions.get(i).isSelected())
+                    //conection_layer.cityAfterFilter.add(citiesOptions.get(i).getText());
+            }
+        }
     }
 
     public TextField txt_username_login;
