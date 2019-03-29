@@ -22,6 +22,8 @@ public class MainWebsiteView extends AView{
     List<CheckMenuItem> coldOptions = new ArrayList<>();
     List<CheckMenuItem> snacksOptions = new ArrayList<>();
     List<CheckMenuItem> pastriesOptions = new ArrayList<>();
+    public TextField txt_username_login;
+    public TextField psw_password_login;
 
     public MainWebsiteView() {
      //   chooseCoffee();
@@ -35,16 +37,16 @@ public class MainWebsiteView extends AView{
         coffeeMenu.getItems().addAll(coffeeOptions);
     }
 
-    public TextField txt_username_login;
-    public TextField psw_password_login;
-
-
     public void login() {
         if (controller.login(txt_username_login.getText(), psw_password_login.getText())) {
          //   ChangeScene("website.fxml");
         } else {
             showAlert("Incorrect Username/Password. Please try again");
         }
+    }
+
+    public void signUp() {
+        controller.openwindow("signUp.fxml",null);
     }
 //    public void filterCities(){
 //        if(finish.isSelected()){

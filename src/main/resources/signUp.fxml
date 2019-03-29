@@ -4,75 +4,87 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.SignUpView">
    <children>
-      <Button layoutX="268.0" layoutY="338.0" mnemonicParsing="false" text="Submit">
+      <ImageView fitHeight="394.0" fitWidth="600.0" layoutX="-3.0" layoutY="7.0">
+         <image>
+            <Image url="@ing_19024_03249.jpg" />
+         </image>
+      </ImageView>
+      <Button layoutX="268.0" layoutY="338.0" mnemonicParsing="false" onAction="#submit" style="-fx-background-color: #F7CAFF;" text="Submit">
          <font>
             <Font name="Calibri Bold" size="15.0" />
          </font>
       </Button>
-      <TextField fx:id="txt_username_login" layoutX="125.0" layoutY="82.0" />
-      <Label layoutX="42.0" layoutY="84.0" text="Username:">
+      <TextField fx:id="txt_username" layoutX="125.0" layoutY="82.0" />
+      <Label layoutX="42.0" layoutY="84.0" style="-fx-background-color: #F7CAFF;" text="Username:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="43.0" layoutY="124.0" text="Password:">
+      <Label layoutX="43.0" layoutY="124.0" style="-fx-background-color: #F7CAFF;" text="Password:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <PasswordField fx:id="psw_password_login" layoutX="125.0" layoutY="121.0" />
-      <TextField fx:id="txt_username_login1" layoutX="125.0" layoutY="160.0" />
-      <Label layoutX="42.0" layoutY="162.0" text="First Name:">
+      <PasswordField fx:id="psw_password" layoutX="125.0" layoutY="121.0" />
+      <TextField fx:id="txt_firstName" layoutX="125.0" layoutY="160.0" />
+      <Label layoutX="42.0" layoutY="162.0" style="-fx-background-color: #F7CAFF;" text="First Name:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_username_login2" layoutX="125.0" layoutY="198.0" />
-      <Label layoutX="42.0" layoutY="200.0" text="Last Name:">
+      <TextField fx:id="txt_lastName" layoutX="125.0" layoutY="198.0" />
+      <Label layoutX="42.0" layoutY="200.0" style="-fx-background-color: #F7CAFF;" text="Last Name:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_username_login11" layoutX="125.0" layoutY="238.0" />
-      <Label layoutX="42.0" layoutY="240.0" text="Email:">
+      <TextField fx:id="txt_email" layoutX="125.0" layoutY="238.0" />
+      <Label layoutX="42.0" layoutY="240.0" style="-fx-background-color: #F7CAFF;" text="Email:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_username_login21" layoutX="125.0" layoutY="276.0" />
-      <Label layoutX="42.0" layoutY="278.0" text="Phone:">
+      <TextField fx:id="txt_phone" layoutX="125.0" layoutY="276.0" />
+      <Label layoutX="42.0" layoutY="278.0" style="-fx-background-color: #F7CAFF;" text="Phone:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_username_login12" layoutX="423.0" layoutY="129.0" />
-      <Label layoutX="309.0" layoutY="131.0" text="Card Number:">
+      <TextField fx:id="txt_cardNo" layoutX="423.0" layoutY="129.0" />
+      <Label layoutX="309.0" layoutY="131.0" style="-fx-background-color: #F7CAFF;" text="Card Number:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_username_login22" layoutX="423.0" layoutY="167.0" />
-      <Label layoutX="309.0" layoutY="169.0" text="Expiration Date:">
+      <TextField fx:id="txt_expDate" layoutX="423.0" layoutY="167.0" />
+      <Label layoutX="309.0" layoutY="169.0" style="-fx-background-color: #F7CAFF;" text="Expiration Date:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="309.0" layoutY="204.0" text="CVV:">
+      <Label layoutX="309.0" layoutY="204.0" style="-fx-background-color: #F7CAFF;" text="CVV:">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_username_login221" layoutX="423.0" layoutY="204.0" />
-      <Label layoutX="234.0" layoutY="3.0" prefHeight="65.0" prefWidth="139.0" text="Sign Up">
+      <TextField fx:id="txt_cvv" layoutX="423.0" layoutY="204.0" />
+      <Label layoutX="234.0" layoutY="3.0" prefHeight="65.0" prefWidth="139.0" style="-fx-text-fill: #EB57FF;" text="Sign Up">
          <font>
-            <Font name="Calibri Bold" size="37.0" />
+            <Font name="Calibri Bold Italic" size="37.0" />
          </font>
       </Label>
+      <Label layoutX="310.0" layoutY="260.0" style="-fx-background-color: #F7CAFF;" text="Admin Code:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txt_admin" layoutX="424.0" layoutY="260.0" />
    </children>
 </AnchorPane>
